@@ -9,10 +9,10 @@ var superagent = require('superagent');
 var MssqlStore = require('../lib/')(session);
 
 describe('MssqlStore', function() {
+  var mssqlConfig = JSON.parse(fs.readFileSync('test/mssqlConfig.json'));
   var connection = null;
 
   before(function(done) {
-    var mssqlConfig = JSON.parse(fs.readFileSync('test/mssqlConfig.json'));
     connection = new sql.Connection(mssqlConfig, function(err) {
       assert.ifError(err);
       done();
@@ -189,7 +189,7 @@ describe('MssqlStore', function() {
   describe('example site', function() {
     it('increments the visit count', function(done) {      
       var example = require('../example/');
-      example.start(function(err) {
+      example.start(mssqlConfig, function(err) {
         assert.ifError(err);
         var agent = superagent.agent();
         var visitHomePage = function(expectedCount, callback) {

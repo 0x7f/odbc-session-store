@@ -3,14 +3,18 @@ var session = require('express-session');
 var sql = require('mssql');
 var MssqlStore = require('../lib')(session);
 
-var dbConfig = {
+var defaultDbConfig = {
   server: "localhost\\sqlexpress",
   database: "sessiontest",
   user: "sa",
   password: "atonan"
 };
 
-var start = function(callback) {
+var start = function(dbConfig, callback) {
+  if (typeof dbConfig === 'function') {
+    callback = dbConfig;
+    dbConfig = defaultDbConfig;
+  }
   callback = callback || function() {};
 
   sql.connect(dbConfig, function(err) {
