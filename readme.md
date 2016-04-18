@@ -1,11 +1,13 @@
-# mssql-session-store
+# odbc-session-store
 
-Implementation of an express-session store using SQL Server.  Uses [mssql](https://github.com/patriksimek/node-mssql) to connect to the database.
+Implementation of an express-session store using ODBC. Uses [node-odbc](https://github.com/wankdanker/node-odbc) to connect to the database.
+
+Is a fork of [mssql-session-store](https://github.com/jwathen/mssql-session-store)
 
 ## Installation
 
 ```
-$ npm install mssql-session-store
+$ npm install odbc-session-store
 ```
 
 ## Important:
@@ -22,13 +24,13 @@ create table Session
 ## Example
 ```
 var session = require('express-session')
-var MssqlStore = require('mssql-session-store')(session);
+var OdbcStore = require('odbc-session-store')(session);
 
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false,
-  store: new MssqlStore(options) // see options below
+  store: new OdbcStore(options) // see options below
 }));
 ```
 
@@ -44,7 +46,7 @@ var options = {
 ### connection
 Default value: `undefined`
 
-Optional instance of a Connection from [mssql](https://github.com/patriksimek/node-mssql).  If undefined then the global connection will be used.
+Mandatory instance of a Connection from [node-odbc](https://github.com/wankdanker/node-odbc).
 
 ### ttl
 Default value: `3600`
